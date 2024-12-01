@@ -17,14 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Blog.RestService.IPostService;
 import com.Blog.entity.Post;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/blog")
+@Tag(name="Blogger API", description = "There are 5 apis to handle the request for the front end")
 public class PostRestApiController {
 	
 	@Autowired
 	private IPostService service;
 	
+	
 	@PostMapping("create-post")
+	@Operation(summary="Post Request which will create a new post")
 	public ResponseEntity<Post> createNewPost(@RequestBody Post post) {
 		
 		Post res = service.addPost(post);
@@ -33,6 +39,7 @@ public class PostRestApiController {
 	}
 	
 	@GetMapping("get-post/{id}")
+	@Operation(summary="Get Request which will get the post by post id")
 	public ResponseEntity<Post> getThePostById(@PathVariable("id") Long id){
 		
 		Post post = service.getPostById(id);
@@ -41,6 +48,7 @@ public class PostRestApiController {
 	}
 	
 	@GetMapping("all-post")
+	@Operation(summary="Get Request which show all the posts")
 	public ResponseEntity<?> getAllPost() { 
 		
 		List<Post> post = service.getAllPosts();
@@ -49,19 +57,21 @@ public class PostRestApiController {
 	}
 	
 	@DeleteMapping("delete-post/{id}")
-	public ResponseEntity<String> deleteThePost(@PathVariable("id") Long id){
+	@Operation(summary="Delete Request to delete the post")
+	public ResponseEntity<Void> deleteThePost(@PathVariable("id") Long id){
 		
-		String res = service.deletePost(id);
+		service.deletePost(id);
 		
-		return new ResponseEntity<String>(res, HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping("update-post")
-	public ResponseEntity<String> updateThePost(@RequestBody Post post ){
+	@Operation(summary="Put Request to update the post")
+	public ResponseEntity<Void> updateThePost(@RequestBody Post post ){
 		
-		String res = service.updatePost(post);
+		service.updatePost(post);
 		
-		return new ResponseEntity<String>(res, HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 		
 	}	
 

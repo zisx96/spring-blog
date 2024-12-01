@@ -53,14 +53,14 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public String deletePost(Long id) {
+	public void deletePost(Long id) {
 		
 		Optional<Post> post = repo.findById(id);
 		
 		if(post.isPresent()){
 			
 			repo.deleteById(id);
-			return "Post with id: " + id +" deleted";
+			
 		}
 		else {
 			
@@ -70,17 +70,21 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public String updatePost(Post updatedPost) {
+	public void updatePost(Post updatedPost) {
 		
 		Optional<Post> post = repo.findById(updatedPost.getId());
 		
 		if(post.isPresent()) {
 			
 			repo.save(updatedPost);
-			return "Post with id: " + updatedPost.getId() +" updated";
+			
 		}
 		
-		throw new PostNotFoundException("Post does not exist to update");
+		else {
+			
+			throw new PostNotFoundException("Post does not exist to update");
+		}
+		
 	}
 
 }

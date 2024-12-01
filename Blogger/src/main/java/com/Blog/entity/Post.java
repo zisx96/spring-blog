@@ -3,12 +3,15 @@ package com.Blog.entity;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import org.springframework.stereotype.Repository;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 
+@Repository
 @Entity
 public class Post {
 

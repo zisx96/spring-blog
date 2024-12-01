@@ -9,7 +9,7 @@ public interface IPostService {
 	Post addPost(Post post);
     List<Post> getAllPosts();
     Post getPostById(Long id);
-    String deletePost(Long id);
-    String updatePost(Post updatedPost);
+    void deletePost(Long id);
+    void updatePost(Post updatedPost);
 
 }
