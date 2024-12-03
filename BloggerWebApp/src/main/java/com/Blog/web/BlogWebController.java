@@ -1,85 +1,72 @@
 package com.Blog.web;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.Blog.entity.Post;
-import com.Blog.service.IBlogWebService;
+import com.Blog.service.BlogWebService;
 
 @Controller
 public class BlogWebController {
-	
-	@Autowired
-    private IBlogWebService blogWebService;
 
-    // Home Page - Show all posts
-    @GetMapping("/home")
-    public String showHomePage(Model model) {
+    @Autowired
+    private BlogWebService blogWebService;
+
+    @GetMapping("/posts")
+    public String getAllPosts(Model model) {
         List<Post> posts = blogWebService.getAllPosts();
         model.addAttribute("posts", posts);
-        return "home"; // Thymeleaf template for home page
+        return "postList"; 
     }
 
-    // View Post Details
-    @GetMapping("/post/{id}")
-    public String viewPostDetails(@PathVariable Long id, Model model) {
-        Post post = blogWebService.getPostById(id);
-        model.addAttribute("post", post);
-        return "postDetails"; // Thymeleaf template for post details
+    @GetMapping("/posts/new")
+    public String createPostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "createPost"; 
     }
 
-    // Delete Post
-    @GetMapping("/post/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
-        blogWebService.deletePost(id);
-        return "redirect:/home"; // Redirect to home page after deletion
-    }
-
-    // Show Create Post Form
-    @GetMapping("/post/create")
-    public String showCreatePostForm(Model model) {
-   //     model.addAttribute("post", new Post());
-        return "createPost"; // Thymeleaf template for create post form
-    }
-
-    // Handle Create Post
-    @PostMapping("/post/create")
-    public String createPost(@ModelAttribute Post post, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        post.setImage(imageFile.getBytes());
-        post.setPublishedDate(LocalDate.now());
+    @PostMapping("/posts")
+    public String createNewPost(Post post) {
         blogWebService.addPost(post);
-        return "redirect:/home"; // Redirect to home page after creation
+        return "redirect:/posts"; 
     }
 
-    // Show Update Post Form
-    @GetMapping("/post/update/{id}")
-    public String showUpdatePostForm(@PathVariable Long id, Model model) {
+    @GetMapping("/posts/edit/{id}")
+    public String editPostForm(@PathVariable("id") Long id, Model model) {
         Post post = blogWebService.getPostById(id);
-        model.addAttribute("post", post);
-        return "updatePost"; // Thymeleaf template for update post form
+        if (post != null) {
+            model.addAttribute("post", post);
+            return "editPost"; 
+        }
+        return "redirect:/posts"; 
     }
 
-    // Handle Update Post
-    @PostMapping("/post/update")
-    public String updatePost(@ModelAttribute Post post, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        if (!imageFile.isEmpty()) {
-            post.setImage(imageFile.getBytes());
-        }
+    @PostMapping("/posts/edit")
+    public String updatePost(@ModelAttribute("post") Post post) {
         blogWebService.updatePost(post);
-        return "redirect:/post/" + post.getId(); // Redirect to updated post's details
+        return "redirect:/posts"; 
     }
-	
+
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable("id") Long id) {
+        blogWebService.deletePost(id);
+        return "redirect:/posts"; 
+    }
+
+    @GetMapping("/posts/view/{id}")
+    public String viewPost(@PathVariable("id") Long id, Model model) {
+        Post post = blogWebService.getPostById(id);
+        if (post != null) {
+            model.addAttribute("post", post);
+            return "viewPost"; 
+        }
+        return "redirect:/posts"; 
+    }
 }

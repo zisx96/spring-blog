@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Post Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .post-image {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p, h3 {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #007BFF; 
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="${post.title}"></h1>
+    <img th:src="${post.imageUrl != null && !post.imageUrl.isEmpty() ? post.imageUrl : '/path/to/default-image.jpg'}" 
+         alt="Post Image" 
+         class="post-image"/>
+    <p th:text="${post.publishedDate}"></p>
+    <h3 th:text="${post.subheading}"></h3>
+    <p th:text="${post.content}"></p>
+    <div class="buttons">
+        <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn">Update Post</a>
+        <a th:href="@{/posts/delete/{id}(id=${post.id})}" class="btn">Delete Post</a>
+    </div>
+    <a th:href="@{/posts}" class="btn">Back to Posts</a>
+</body>
+</html>

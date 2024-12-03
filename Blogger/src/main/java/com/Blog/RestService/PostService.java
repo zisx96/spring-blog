@@ -1,6 +1,5 @@
 package com.Blog.RestService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +23,6 @@ public class PostService implements IPostService {
 	
 	@Override
 	public Post addPost(Post post) {
-		
-		if (post.getPublishedDate() == null) {
-            post.setPublishedDate(LocalDate.now());
-        }
 		
 		return repo.save(post);
 	}
