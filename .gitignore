@@ -1,0 +1,51 @@
+# Ignore Eclipse IDE specific files
+/.metadata/
+/.settings/
+/.classpath
+/.project
+
+# Ignore IntelliJ IDEA files (if applicable)
+/.idea/
+*.iml
+
+# Ignore Maven wrapper
+/.mvn/
+/mvnw
+/mvnw.cmd
+
+# Ignore build output
+/target/
+/bin/
+
+# Ignore logs
+/logs
+*.log
+
+# Ignore IDE specific folders (for example, VS Code)
+.vscode/
+
+# Ignore application.properties file for sensitive information
+/src/main/resources/application.properties
+
+# Ignore generated files from build tools
+/build/
+dist/
+
+# Ignore Spring Boot specific files (jar/war)
+*.jar
+*.war
+
+# Ignore Java compiled classes
+*.class
+
+# Ignore database-related files (MySQL or any SQL dump files)
+*.sql
+*.db
+*.db-journal
+
+# Ignore temporary system files created by the OS
+.DS_Store
+Thumbs.db
+
+# Ignore user-specific files in the workspace
+/.history
