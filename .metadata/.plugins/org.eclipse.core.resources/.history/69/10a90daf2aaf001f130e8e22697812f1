@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>All Posts</h1>
+    <div th:each="post : ${posts}">
+        <h2><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a></h2>
+        <p th:text="${post.subheading}"></p>
+        <img th:src="@{${post.imageUrl}}" alt="Post Image" />
+    </div>
+    <a href="/create-post">Create New Post</a>
+</body>
+</html>

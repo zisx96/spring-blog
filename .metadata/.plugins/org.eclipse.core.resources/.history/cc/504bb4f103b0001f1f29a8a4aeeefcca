@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blog Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+<body>
+    <!-- Static Header Image -->
+    <div class="header">
+        <img src="/images/header.jpg" alt="Header Image">
+        <div class="overlay">
+            <h1>Blogger's Vision</h1>
+            <p>Better Content for Better Minds</p>
+        </div>
+    </div>
+
+    <!-- Create Post Button -->
+    <div class="create-post-container">
+        <a href="/web/create-post" class="create-post-button">+ Create New Post</a>
+    </div>
+
+    <!-- Post Categories -->
+    <div class="categories">
+        <button>All Categories</button>
+        <button>Community</button>
+        <button>Company</button>
+        <button>Culture</button>
+        <button>Technology</button>
+    </div>
+
+    <!-- Post Grid -->
+    <div class="post-grid">
+        <div class="post" th:each="post : ${posts}">
+            <img th:src="@{'data:image/jpeg;base64,' + ${post.image}}" alt="Post Image">
+            <div class="post-content">
+                <h2 th:text="${post.title}">Post Title</h2>
+                <p th:text="${post.description}">Post Description</p>
+                <a th:href="@{/web/post/{id}(id=${post.id})}">Read More</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

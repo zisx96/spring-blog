@@ -1,0 +1,10 @@
+package com.Blog.advice;
+
+import java.time.LocalDateTime;
+
+public class Errors {
+	
+	private String statusCode;
+	private LocalDateTime localDateTime;
+	private String error;
+}

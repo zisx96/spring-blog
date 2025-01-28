@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${post.title}">Post Details</title>
+</head>
+<body>
+    <h1 th:text="${post.title}"></h1>
+    <img th:src="@{'data:image/jpeg;base64,' + ${post.image}}" alt="Post Image"/>
+    <h2 th:text="${post.subheading}"></h2>
+    <p th:text="${post.description}"></p>
+    <p th:text="${post.content}"></p>
+    <a th:href="@{/web/post/update/{id}(id=${post.id})}">Update Post</a>
+    <a th:href="@{/web/post/delete/{id}(id=${post.id})}">Delete Post</a>
+</body>
+</html>

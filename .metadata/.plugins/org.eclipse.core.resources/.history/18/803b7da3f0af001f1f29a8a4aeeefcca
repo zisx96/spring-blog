@@ -1,0 +1,16 @@
+package com.Blog.service;
+
+public interface IBlogWebService {
+
+
+    Post addPost(Post post);
+
+    Post getPostById(Long id);
+
+    List<Post> getAllPosts();
+
+    String deletePost(Long id);
+
+    String updatePost(Post post);
+	
+}

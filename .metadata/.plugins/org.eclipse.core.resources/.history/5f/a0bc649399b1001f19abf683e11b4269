@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blog Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: darkred;
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns */
+            gap: 20px; /* Space between items */
+            justify-content: center;
+            width: 70%;
+            padding: 10px;
+        }
+
+        .post-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-item img {
+            width: 100%; /* Ensures the image is responsive */
+            max-width: 280px; /* Controls the maximum size */
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-item h2 {
+            font-size: 20px;
+            margin: 0;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .post-item h3 {
+            font-size: 16px;
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Blog</h1>
+    <a th:href="@{/posts/new}" class="btn">Create New Post</a>
+    <div class="posts-container" th:each="post : ${posts}">
+        <div class="post-item">
+            <a th:href="@{/posts/view/{id}(id=${post.id})}">
+                <img th:src="${post.imageUrl != null && !post.imageUrl.isEmpty() ? post.imageUrl : '/path/to/default-image.jpg'}" 
+                     alt="Post Image" />
+            </a>
+            <h2>
+                <a th:href="@{/posts/view/{id}(id=${post.id})}" th:text="${post.title}"></a>
+            </h2>
+            <h3 th:text="${post.subheading}"></h3>
+        </div>
+    </div>
+</body>
+</html>

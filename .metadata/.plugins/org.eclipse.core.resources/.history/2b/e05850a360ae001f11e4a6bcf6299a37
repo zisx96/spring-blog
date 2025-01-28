@@ -1,0 +1,6 @@
+package com.Blog.exceptions;
+
+public interface PostNotFoundException extends RunTimeException {
+	
+	
+}

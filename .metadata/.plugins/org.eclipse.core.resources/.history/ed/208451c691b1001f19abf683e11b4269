@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Post Details</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Add your CSS link if needed -->
+</head>
+<body>
+    <h1 th:text="${post.title}"></h1>
+    <img th:src="${post.imageUrl != null && !post.imageUrl.isEmpty() ? post.imageUrl : '/path/to/default-image.jpg'}" 
+         alt="Post Image" 
+         class="post-image"/>
+    <h3 th:text="${post.subheading}"></h3>
+    <p th:text="${post.content}"></p> <!-- Assuming `content` is a field in your `Post` entity -->
+    <a href="/posts" class="btn">Back to Posts</a>
+</body>
+</html>

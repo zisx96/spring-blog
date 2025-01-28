@@ -1,0 +1,12 @@
+spring.application.name=Blogger
+
+# Web Configure
+
+server.port=8484
+server.servlet.context-path=/Blogger
+
+spring.datasource.url=jdbc:mysql:///spring_blog
+spring.datasource.username=root
+spring.datasource.password=root@098
+
+spring.jpa.hibernate.ddl-auto=update

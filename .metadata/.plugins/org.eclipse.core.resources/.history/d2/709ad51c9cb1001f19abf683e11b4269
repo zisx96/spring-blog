@@ -1,0 +1,87 @@
+/* General reset for margins and padding */
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styling for the Create New Post button */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e74c3c; /* Red color */
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #c0392b; /* Darker red for hover */
+}
+
+/* Styling for the post grid container */
+.post-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Space between the posts */
+    justify-content: center; /* Center the grid */
+    margin-top: 20px;
+}
+
+.post-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Styling for each post */
+.post-item .post-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.post-item h2 {
+    margin: 10px 0 5px 0;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.post-item h3 {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .post-item {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+}
+
+/* Optional: Styling for overall container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}

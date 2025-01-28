@@ -1,0 +1,81 @@
+package com.Blog.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import com.Blog.entity.Post;
+import com.Blog.exceptions.PostNotFoundException;
+import com.Blog.repo.IPostRepo;
+
+public class PostService implements IPostService {
+	
+	private IPostRepo repo;
+	
+	public void setIPostRepo(IPostRepo repo) {
+		
+		this.repo = repo;
+	}
+	
+	@Override
+	public Post addPost(Post post) {
+		
+		if (post.getPublishedDate() == null) {
+            post.setPublishedDate(LocalDate.now());
+        }
+		
+		return repo.save(post);
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		return repo.findAll();
+	}
+
+	@Override
+	public Post getPostById(Long id) {
+		
+		Optional<Post> post = repo.findById(id);
+		
+		if(post.isPresent()) {
+			
+			return post.get();
+		}
+		else {
+			
+			throw new PostNotFoundException("Post not found with id: " + id);
+		}
+	}
+
+	@Override
+	public void deletePost(Long id) {
+		
+		Optional<Post> post = repo.findById(id);
+		
+		if(post.isPresent()){
+			
+			repo.deleteById(id);
+		}
+		else {
+			
+			throw new PostNotFoundException("Post not found with id: " + id);
+		}
+		
+	}
+
+	@Override
+	public Post updatePost(Post updatedPost) {
+		
+		Optional<Post> post = repo.findById(updatedPost.getId());
+		
+		if(post.isPresent()) {
+			
+			Post newPost = post.get();
+			
+			return repo.save(newPost);
+		}
+		
+		throw new PostNotFoundException("Post does not exist to update);
+	}
+
+}

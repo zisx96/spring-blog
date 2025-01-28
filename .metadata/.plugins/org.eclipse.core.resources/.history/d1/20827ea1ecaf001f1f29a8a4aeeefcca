@@ -1,0 +1,14 @@
+package com.Blog;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@OpenApiDefiantion
+public class BloggerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BloggerApplication.class, args);
+	}
+
+}

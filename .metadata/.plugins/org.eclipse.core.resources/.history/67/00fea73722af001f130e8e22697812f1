@@ -1,0 +1,86 @@
+package com.Blog.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.Blog.entity.Post;
+import com.Blog.exceptions.PostNotFoundException;
+import com.Blog.repo.IPostRepo;
+
+@Service
+public class PostService implements IPostService {
+	
+	private IPostRepo repo;
+	
+	@Autowired
+	public void setIPostRepo(IPostRepo repo) {
+		
+		this.repo = repo;
+	}
+	
+	@Override
+	public Post addPost(Post post) {
+		
+		if (post.getPublishedDate() == null) {
+            post.setPublishedDate(LocalDate.now());
+        }
+		
+		return repo.save(post);
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		return repo.findAll();
+	}
+
+	@Override
+	public Post getPostById(Long id) {
+		
+		Optional<Post> post = repo.findById(id);
+		
+		if(post.isPresent()) {
+			
+			return post.get();
+		}
+		else {
+			
+			throw new PostNotFoundException("Post not found with id: " + id);
+		}
+	}
+
+	@Override
+	public String deletePost(Long id) {
+		
+		Optional<Post> post = repo.findById(id);
+		
+		if(post.isPresent()){
+			
+			repo.deleteById(id);
+			return "Post with id: " + id +" deleted";
+		}
+		else {
+			
+			throw new PostNotFoundException("Post not found with id: " + id);
+		}
+		
+	}
+
+	@Override
+	public String updatePost(Post updatedPost) {
+		
+		Optional<Post> post = repo.findById(updatedPost.getId());
+		
+		if(post.isPresent()) {
+			
+			repo.save(updatedPost);
+			return "Post with id: " + updatedPost.getId() +" updated";
+		}
+		
+		throw new PostNotFoundException("Post does not exist to update");
+	}
+
+}

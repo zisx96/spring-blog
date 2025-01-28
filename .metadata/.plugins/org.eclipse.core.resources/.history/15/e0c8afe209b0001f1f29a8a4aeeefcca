@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - Blog</title>
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+    <div th:if="${posts.size() > 0}">
+        <ul>
+            <li th:each="post : ${posts}">
+                <a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${posts.isEmpty()}">
+        <p>No posts available.</p>
+    </div>
+    <a href="@{/post/create}">Create New Post</a>
+</body>
+</html>

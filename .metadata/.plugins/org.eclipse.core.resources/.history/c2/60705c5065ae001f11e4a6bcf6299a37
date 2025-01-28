@@ -1,0 +1,26 @@
+package com.Blog.rest;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.Blog.entity.Post;
+import com.Blog.service.IPostService;
+
+@RestController
+public class PostRestApiController {
+	
+	private IPostService service;
+	
+	@GetMapping("all-post")
+	public ResponseEntity<?> getAllPost() {
+		
+		List<Post> post = service.getAllPosts();
+		
+		return new ResponseEntity<List>(post, HttpStatus.OK);
+	}
+
+}

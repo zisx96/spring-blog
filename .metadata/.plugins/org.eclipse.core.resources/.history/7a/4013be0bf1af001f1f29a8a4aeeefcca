@@ -1,0 +1,5 @@
+spring.application.name=BloggerWebApp
+
+# Web Configure
+
+server.port=8485

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Post</title>
+</head>
+<body>
+    <h1>Update Post</h1>
+    <form action="/web/post/update" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${post.id}"/>
+        <input type="text" name="title" th:value="${post.title}" placeholder="Title" required/>
+        <input type="text" name="subheading" th:value="${post.subheading}" placeholder="Subheading" required/>
+        <textarea name="description" th:text="${post.description}" placeholder="Description" required></textarea>
+        <textarea name="content" th:text="${post.content}" placeholder="Content" required></textarea>
+        <input type="file" name="imageFile" accept="image/*"/>
+        <input type="text" name="author" th:value="${post.author}" placeholder="Author" required/>
+        <button type="submit">Update Post</button>
+    </form>
+</body>
+</html>

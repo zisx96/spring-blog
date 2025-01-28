@@ -1,0 +1,5 @@
+package com.Blog.exceptions;
+
+public class PostNotFoundException {
+
+}

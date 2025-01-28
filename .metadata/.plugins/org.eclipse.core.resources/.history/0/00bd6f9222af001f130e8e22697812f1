@@ -1,0 +1,85 @@
+package com.Blog.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.Blog.entity.Post;
+import com.Blog.service.IPostService;
+
+@Controller
+public class BlogWebController {
+	
+	@Autowired
+	private IPostService service;
+	
+	@GetMapping("/")	// main page homepage
+	public String getAllPost(Model model) {
+		
+		List<Post> posts = service.getAllPosts();
+		
+		model.addAttribute("posts", posts);
+		
+		return "index";	// main page
+	}
+	
+	@GetMapping("/post/{id}")
+	public String getPostByid(@PathVariable("id") Long id, Model model) {
+		
+		Post post = service.getPostById(id);
+		
+		model.addAttribute("post", post);
+		
+		return "post-info";	// post info page
+	}
+	
+	@GetMapping("/create-post")	// in main page create post button
+	public String createThePostForm(Model model) {
+		
+		model.addAttribute("post", new Post());
+		
+		return "create-post";	// create post page 
+		
+	}
+	
+	@PostMapping("/create-post")
+	public String createThePost(@ModelAttribute("post") Post post) {
+		
+		service.addPost(post);
+		
+		return "redirect:/";	//after creating post redirect to homepage
+	}
+	
+	@GetMapping("/update-post/{id}")
+	public String updateThePostForm(@PathVariable("id") Long id, Model model) {
+
+		Post post = service.getPostById(id);
+		model.addAttribute("post", post);
+		
+		return "update-post";	// post form page
+	}
+	
+	@PostMapping("/update-post")
+	public String updateThePostForm(@ModelAttribute("post") Post post) {
+
+		service.updatePost(post);
+		
+		return "redirect:/post/" + post.getId();	// post form page
+	}
+	
+	@GetMapping("/delete-post/{id}")
+	public String deleteThepost(@PathVariable("id") Long id) {
+		
+		service.deletePost(id);
+		
+		return "redirect:/";
+		
+	}
+	
+}

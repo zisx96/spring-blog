@@ -1,0 +1,63 @@
+package com.Blog.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.Blog.service.BlogWebService;
+import com.Blog.entity.Post;
+
+@Controller
+public class PostWebController {
+    
+    @Autowired
+    private BlogWebService blogWebService;
+    
+    @GetMapping("/posts")
+    public String getAllPosts(Model model) {
+        List<Post> posts = blogWebService.getAllPosts();
+        model.addAttribute("posts", posts);
+        return "postList"; // View name for displaying the list of posts
+    }
+
+    @GetMapping("/posts/new")
+    public String createPostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "createPost"; // View name for the form to create a new post
+    }
+
+    @PostMapping("/posts")
+    public String createNewPost(Post post) {
+        blogWebService.addPost(post);
+        return "redirect:/posts"; // Redirect to the list of posts after creation
+    }
+
+    @GetMapping("/posts/edit/{id}")
+    public String editPostForm(@PathVariable("id") Long id, Model model) {
+        Post post = blogWebService.getPostById(id);
+        if (post != null) {
+            model.addAttribute("post", post);
+            return "editPost"; // View name for the form to edit an existing post
+        }
+        return "redirect:/posts"; // Redirect if the post is not found
+    }
+
+    @PostMapping("/posts/edit")
+    public String updatePost(Post post) {
+        blogWebService.updatePost(post);
+        return "redirect:/posts"; // Redirect to the list of posts after updating
+    }
+
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable("id") Long id) {
+        blogWebService.deletePost(id);
+        return "redirect:/posts"; // Redirect to the list of posts after deletion
+    }
+}

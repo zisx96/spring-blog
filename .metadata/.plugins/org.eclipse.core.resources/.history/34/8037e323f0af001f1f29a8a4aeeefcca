@@ -1,0 +1,5 @@
+package com.Blog.service;
+
+public interface IBlogWebService {
+
+}

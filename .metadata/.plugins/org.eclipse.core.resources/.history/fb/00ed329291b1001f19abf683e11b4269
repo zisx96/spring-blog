@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Post Details</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Add your CSS link if needed -->
+</head>
+<body>
+    <div class="post-detail">
+        <img th:src="@{${post.imageUrl}}" alt="Post Image" class="post-image"/>
+        <h2 th:text="${post.title}"></h2>
+        <h3 th:text="${post.subheading}"></h3>
+        <p th:text="${post.content}"></p>
+        <div class="post-actions">
+            <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn">Update Post</a>
+            <a th:href="@{/posts/delete/{id}(id=${post.id})}" class="btn" onclick="return confirm('Are you sure you want to delete this post?')">Delete Post</a>
+        </div>
+    </div>
+</body>
+</html>

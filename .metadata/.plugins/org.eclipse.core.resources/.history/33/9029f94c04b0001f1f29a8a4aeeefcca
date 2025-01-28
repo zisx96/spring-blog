@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Post Details</title>
+</head>
+<body>
+    <h1 th:text="${post.title}"></h1>
+    <p th:text="${post.content}"></p>
+    <p>Published Date: <span th:text="${post.publishedDate}"></span></p>
+    <img th:src="@{'/images/' + ${post.id} + '.jpg'}" alt="Post Image"/>
+    <a href="@{/home}">Back to Home</a>
+    <a href="@{/post/update/{id}(id=${post.id})}">Edit Post</a>
+    <a href="@{/post/delete/{id}(id=${post.id})}">Delete Post</a>
+</body>
+</html>

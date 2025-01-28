@@ -1,0 +1,16 @@
+package com.Blog.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.Blog.entity.Post;
+
+public interface IPostService {
+	
+	Post savePost(Post post);
+    List<Post> getAllPosts();
+    Optional<Post> getPostById(Long id);
+    void deletePost(Long id);
+    Post updatePost(Long id, Post updatedPost);
+
+}

@@ -1,0 +1,74 @@
+package com.Blog.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import com.Blog.entity.Post;
+
+@Service
+public class BlogWebService implements IBlogWebService {
+
+	private String  baseUrl = "http://localhost:8484/Blogger/api/blog";
+	
+	private WebClient webClient;
+	
+	public void PostWebService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl(baseUrl).build();
+    }
+	
+	@Override
+	public Post addPost(Post post) {
+		
+		return webClient.post()
+				.uri("/create-post")
+				.bodyValue(post)
+				.retrieve()
+				.bodyToMono(Post.class)
+				.block();
+	}
+
+	@Override
+	public Post getPostById(Long id) {
+		
+		return webClient.get()
+				.uri("/get-post/{id}, id")
+				.retrieve()
+				.bodyToMono(Post.class)
+				.block();
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		
+		return webClient.get()
+				.uri("/all-post")
+				.retrieve()
+				.bodyToFlux(Post.class)
+				.collectList()
+				.block();
+	}
+
+	@Override
+	public void deletePost(Long id) {
+		
+		webClient.delete()
+				.uri("/delete-post/{id}", id)
+				.retrieve()
+				.toBodilessEntity()
+				.block();
+	}
+
+	@Override
+	public Post updatePost(Post post) {
+		
+		return webClient.put()
+				.uri("/update-post")
+				.bodyValue(post)
+				.retrieve()
+				.bodyToMono(Post.class)
+				.block();
+	}
+
+}

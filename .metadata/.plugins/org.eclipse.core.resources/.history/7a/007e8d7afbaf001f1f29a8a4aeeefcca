@@ -1,0 +1,5 @@
+package com.Blog.web;
+
+public class BlogWebController {
+
+}

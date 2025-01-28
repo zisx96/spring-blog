@@ -1,0 +1,42 @@
+package com.Blog.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.Blog.entity.Post;
+import com.Blog.service.IPostService;
+
+@Controller
+public class BlogWebController {
+	
+	@Autowired
+	private IPostService service;
+	
+	@GetMapping("/")	// main page
+	public String getAllPost(Model model) {
+		
+		List<Post> result = service.getAllPosts();
+		
+		model.addAttribute("allPost", result);
+		
+		return "index";
+	}
+	
+	@GetMapping("post/{id}")
+	public String getPostByid(@PathVariable("id") Long id, Model model) {
+		
+		Post post = service.getPostById(id);
+		
+		model.addAttribute("post", post);
+		
+		return "post-info";
+	}
+	
+	
+	
+}
