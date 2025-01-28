@@ -65,13 +65,21 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public void updatePost(Post updatedPost) {
+	public void updatePost(Post updatedPost,Long id) {
 		
-		Optional<Post> post = repo.findById(updatedPost.getId());
+		Optional<Post> post = repo.findById(id);
 		
 		if(post.isPresent()) {
-			
-			repo.save(updatedPost);
+
+			Post existingPost = post.get();
+
+			existingPost.setTitle(updatedPost.getTitle());
+			existingPost.setContent(updatedPost.getContent());
+			existingPost.setSubheading(updatedPost.getSubheading());
+			existingPost.setAuthor(updatedPost.getAuthor());
+			existingPost.setImageUrl(updatedPost.getImageUrl());
+
+			repo.save(existingPost);
 			
 		}
 		

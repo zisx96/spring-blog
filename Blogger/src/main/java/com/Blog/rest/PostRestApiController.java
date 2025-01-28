@@ -5,14 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.Blog.RestService.IPostService;
 import com.Blog.entity.Post;
@@ -21,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/blog")
 @Tag(name="Blogger API", description = "There are 5 apis to handle the request for the front end")
 public class PostRestApiController {
@@ -29,7 +23,7 @@ public class PostRestApiController {
 	private IPostService service;
 	
 	
-	@PostMapping("create-post")
+	@PostMapping()
 	@Operation(summary="Post Request which will create a new post")
 	public ResponseEntity<Post> createNewPost(@RequestBody Post post) {
 		
@@ -38,7 +32,7 @@ public class PostRestApiController {
 		return new ResponseEntity<Post>(res, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("get-post/{id}")
+	@GetMapping("/{id}")
 	@Operation(summary="Get Request which will get the post by post id")
 	public ResponseEntity<Post> getThePostById(@PathVariable("id") Long id){
 		
@@ -47,7 +41,7 @@ public class PostRestApiController {
 		return new ResponseEntity<Post>(post, HttpStatus.OK);
 	}
 	
-	@GetMapping("all-post")
+	@GetMapping()
 	@Operation(summary="Get Request which show all the posts")
 	public ResponseEntity<?> getAllPost() { 
 		
@@ -56,7 +50,7 @@ public class PostRestApiController {
 		return new ResponseEntity<List<Post>>(post, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("delete-post/{id}")
+	@DeleteMapping("/{id}")
 	@Operation(summary="Delete Request to delete the post")
 	public ResponseEntity<Void> deleteThePost(@PathVariable("id") Long id){
 		
@@ -65,11 +59,11 @@ public class PostRestApiController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PutMapping("update-post")
+	@PutMapping("/{id}")
 	@Operation(summary="Put Request to update the post")
-	public ResponseEntity<Void> updateThePost(@RequestBody Post post ){
+	public ResponseEntity<Void> updateThePost(@RequestBody Post post, @PathVariable("id") Long id){
 		
-		service.updatePost(post);
+		service.updatePost(post, id);
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		

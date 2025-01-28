@@ -10,6 +10,6 @@ public interface IPostService {
     List<Post> getAllPosts();
     Post getPostById(Long id);
     void deletePost(Long id);
-    void updatePost(Post updatedPost);
+    void updatePost(Post updatedPost,Long id);
 
 }
